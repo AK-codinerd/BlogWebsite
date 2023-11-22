@@ -1,0 +1,69 @@
+{% import "bootstrap/wtf.html" as wtf %} {% block content %}
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url({{ post.img_url }})">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="post-heading">
+          <h1>{{ post.title }}</h1>
+          <h2 class="subheading">{{ post.subtitle }}</h2>
+          <span class="meta"
+            >Posted by
+            <a href="#">{{ post.author.name }}</a>
+            on {{ post.date }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Post Content -->
+<article>
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        {{ post.body|safe }}
+        <!--TODO: Only show Edit Post button if user id is 1 (admin user) -->
+        {% if current_user.id == 1: %}
+        <div class="d-flex justify-content-end mb-4">
+          <a
+            class="btn btn-primary float-right"
+            href="{{url_for('edit_post', post_id=post.id)}}"
+            >Edit Post</a
+          >
+        </div>
+        {% endif %}
+
+        <!-- Comments Area -->
+        <!-- TODO: Add a CKEditor for commenting below -->
+        {{ ckeditor.load() }} {{ ckeditor.config(name='comment') }}
+        {{ wtf.quick_form(form) }}
+
+
+        <div class="comment">
+          <!-- TODO: Show all the comments on a post -->
+<!--     ** ** ** * ** **     so we took the blogpost as we send it here through rendertemplate of show post and from comments in the blogposts as we took post.post_comments so for every comment we took their comment.text from the Comment(class) and then comment.comment_author.name here comment from for then comment_author from the Comment(class) and it actually gives a user object and from that user object we get the name of the author-->
+          {% for comment in post.post_comments: %}
+          <ul class="commentList">
+            <li>
+              <div class="commenterImage">
+                <img src= '{{ comment.comment_author.email | gravatar }}' />
+              </div>
+              <div class="commentText">
+                <p>{{ comment.text }}</p>
+                <span class="date sub-text">{{ comment.comment_author.name }}</span>
+              </div>
+            </li>
+          </ul>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+{% include "footer.html" %}
+{% endblock %}
