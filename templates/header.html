@@ -11,7 +11,7 @@
     <title>Ak's Blog</title>
     {% block styles %}
     <!-- Load Bootstrap-Flask CSS here -->
-     {{ bootstrap.load_css() }}
+     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link
       rel="icon"
       type="image/x-icon"

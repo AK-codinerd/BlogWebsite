@@ -26,7 +26,7 @@ app.app_context().push()
 app.config['SECRET_KEY'] = os.environ.get("FLASK_KEY")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 ckeditor = CKEditor(app)
-bootstrap = Bootstrap(app)
+Bootstrap(app)
 
 # using the flask_gravatar for profile images if any doubt just google flask_gravatar
 gravatar = Gravatar(app,
@@ -192,7 +192,7 @@ def logout():
 def get_all_posts():
     result = db.session.execute(db.select(BlogPost))
     posts = result.scalars().all()
-    return render_template("index.html", all_posts=posts, bootstrap=bootstrap, current_user=current_user) # so actually this is the home page and by sending the status of the user through currentuser you are basically sending the status of the user and in the template it will identify the status of the user and it will provide the navs of login and register and logout
+    return render_template("index.html", all_posts=posts, current_user=current_user) # so actually this is the home page and by sending the status of the user through currentuser you are basically sending the status of the user and in the template it will identify the status of the user and it will provide the navs of login and register and logout
 
 
 # ****Allow logged-in users to comment on posts
