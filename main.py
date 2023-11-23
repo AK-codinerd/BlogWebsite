@@ -195,7 +195,7 @@ def get_all_posts():
     return render_template("index.html", all_posts=posts, current_user=current_user) # so actually this is the home page and by sending the status of the user through currentuser you are basically sending the status of the user and in the template it will identify the status of the user and it will provide the navs of login and register and logout
 
 
-# TODO: Allow logged-in users to comment on posts
+# ****Allow logged-in users to comment on posts
 @app.route("/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id):
     requested_post = db.get_or_404(BlogPost, post_id)
@@ -219,7 +219,7 @@ def show_post(post_id):
     return render_template("post.html", post=requested_post, form=comment_form, current_user=current_user)
 
 
-# TODO: Use a decorator so only an admin user can create a new post
+# ***Use a decorator so only an admin user can create a new post
 @app.route("/new-post", methods=["GET", "POST"])
 @admin_only
 def add_new_post():
@@ -239,7 +239,7 @@ def add_new_post():
     return render_template("make-post.html", form=form)
 
 
-# TODO: Use a decorator so only an admin user can edit a post
+# ****Use a decorator so only an admin user can edit a post
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
 @admin_only
 def edit_post(post_id):
