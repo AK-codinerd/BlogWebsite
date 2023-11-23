@@ -192,7 +192,7 @@ def logout():
 def get_all_posts():
     result = db.session.execute(db.select(BlogPost))
     posts = result.scalars().all()
-    return render_template("index.html", all_posts=posts, current_user=current_user) # so actually this is the home page and by sending the status of the user through currentuser you are basically sending the status of the user and in the template it will identify the status of the user and it will provide the navs of login and register and logout
+    return render_template("index.html", all_posts=posts, bootstrap=bootstrap, current_user=current_user) # so actually this is the home page and by sending the status of the user through currentuser you are basically sending the status of the user and in the template it will identify the status of the user and it will provide the navs of login and register and logout
 
 
 # ****Allow logged-in users to comment on posts
