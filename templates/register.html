@@ -1,4 +1,4 @@
-{% from "bootstrap/wtf.html" import render_field %}
+{% import "bootstrap/wtf.html" as render_field %}
 {% block content %}
 {% include "header.html" %}
 
@@ -24,7 +24,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <!--TODO: render your registration form here-->
-        {{ render_field(form.field_name) }}
+          {{ wtf.quick_form(form) }}
       </div>
     </div>
   </div>
