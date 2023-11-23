@@ -57,6 +57,7 @@ def admin_only(f):
     def decorated_function(*args, **kwargs):
         #If id is not 1 then return abort with 403 error **** also if someone who's not logged in tries to go to the admin only routes it shows attribute error as no current_user is logged in so to fix that
         if not current_user.is_authenticated or current_user.id != 1:
+            print(current_user.id)
             # so basically we are checking if the user entering the routes is not authenticated and not admin then abort
             return abort(403)
         #Otherwise continue with the route function
@@ -106,8 +107,6 @@ class BlogPost(db.Model):
 # Adding a parent class here for the comments for blogpost
     post_comments = relationship("Comment", back_populates="parent_post")
 
-
-
 class Comment(db.Model):
     __tablename__ = "comments"
     id = db.Column(db.Integer, nullable=False, primary_key=True)
@@ -122,7 +121,6 @@ class Comment(db.Model):
     # above 100 line user add child as example same here just blogpost as parent and comment is a child
     post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
     parent_post = relationship("BlogPost", back_populates="post_comments")
-
 
 
 # creating the databases not necessary to write another file uri for users it will automatically create another one for the user in the same directory as the previous one
@@ -248,14 +246,14 @@ def edit_post(post_id):
         title=post.title,
         subtitle=post.subtitle,
         img_url=post.img_url,
-        author=post.author,
+        author=current_user,
         body=post.body
     )
     if edit_form.validate_on_submit():
         post.title = edit_form.title.data
         post.subtitle = edit_form.subtitle.data
         post.img_url = edit_form.img_url.data
-        post.author = current_user.name
+        post.author = current_user
         post.body = edit_form.body.data
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
