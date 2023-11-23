@@ -26,7 +26,7 @@ app.app_context().push()
 app.config['SECRET_KEY'] = os.environ.get("FLASK_KEY")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 ckeditor = CKEditor(app)
-Bootstrap(app)
+bootstrap = Bootstrap(app)
 
 # using the flask_gravatar for profile images if any doubt just google flask_gravatar
 gravatar = Gravatar(app,
