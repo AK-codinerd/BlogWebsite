@@ -188,28 +188,9 @@ def logout():
 
 @app.route('/')
 def get_all_posts():
-    try:
-        # Start a transaction
-        with db.session.begin():
-            result = db.session.execute(db.select(BlogPost))
-            posts = result.scalars().all()
-
-        # Render the template with the retrieved posts
-        return render_template("index.html", all_posts=posts, current_user=current_user)
-
-    except Exception as e:
-        # Log the error or handle it appropriately
-        print(f"Error fetching posts: {e}")
-
-        # Rollback the transaction in case of an exception
-        db.session.rollback()
-
-        # Optionally, re-raise the exception if needed
-        # raise e
-
-    finally:
-        # Close the session
-        db.session.close() # so actually this is the home page and by sending the status of the user through currentuser you are basically sending the status of the user and in the template it will identify the status of the user and it will provide the navs of login and register and logout
+    result = db.session.execute(db.select(BlogPost))
+    posts = result.scalars().all()
+    return render_template("index.html", all_posts=posts, current_user=current_user) # so actually this is the home page and by sending the status of the user through currentuser you are basically sending the status of the user and in the template it will identify the status of the user and it will provide the navs of login and register and logout
 
 
 # ****Allow logged-in users to comment on posts
