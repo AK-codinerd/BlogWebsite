@@ -1,4 +1,5 @@
 # also check the requirements that i have mentioned
+import datetime as dt
 import os
 import smtplib
 from datetime import date
@@ -189,8 +190,9 @@ def logout():
 @app.route('/')
 def get_all_posts():
     result = db.session.execute(db.select(BlogPost))
+    current_year = dt.datetime.now().year
     posts = result.scalars().all()
-    return render_template("index.html", all_posts=posts, current_user=current_user) # so actually this is the home page and by sending the status of the user through currentuser you are basically sending the status of the user and in the template it will identify the status of the user and it will provide the navs of login and register and logout
+    return render_template("index.html", all_posts=posts, current_user=current_user, current_year=current_year) # so actually this is the home page and by sending the status of the user through currentuser you are basically sending the status of the user and in the template it will identify the status of the user and it will provide the navs of login and register and logout
 
 
 # ****Allow logged-in users to comment on posts
